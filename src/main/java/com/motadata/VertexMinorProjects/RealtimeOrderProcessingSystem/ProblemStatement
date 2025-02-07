@@ -1,0 +1,43 @@
+Problem Statement: Real-Time Order Processing System
+Overview:
+You are building a Real-Time Order Processing System for an e-commerce platform using Vert.x. The system must handle multiple tasks such as order placement, payment processing, inventory updates, and notification services efficiently.
+
+To achieve this, you will use:
+
+Pub/Sub pattern (for broadcasting order status updates)
+Request/Reply pattern (for synchronous order validation and payment processing)
+Worker Verticles (for non-blocking, CPU-intensive tasks like fraud detection)
+Functional Requirements:
+Order Placement (HTTP Verticle)
+
+A client sends an order request via an HTTP API.
+The HTTP Verticle processes the request and forwards it to the Order Processing Verticle via the Event Bus (Request/Reply pattern).
+Order Processing (Order Processing Verticle)
+
+Validates the order.
+Calls Payment Verticle to process payment using Request/Reply.
+If payment is successful, it forwards the order to Inventory Verticle (Pub/Sub) for stock updates.
+Payment Processing (Payment Verticle - Worker Verticle)
+
+Runs in a Worker Verticle to avoid blocking the event loop.
+Simulates a time-consuming task (e.g., fraud detection, payment gateway call).
+Returns a success/failure response.
+Inventory Management (Inventory Verticle - Pub/Sub)
+
+Listens for successful order events and updates inventory.
+Publishes inventory updates to all subscribers (e.g., warehouse, analytics service).
+Notification Service (Notification Verticle - Pub/Sub Subscriber)
+
+Listens for order status updates and sends real-time notifications to users (email/SMS).
+Non-Functional Requirements:
+✅ Non-blocking architecture (using Worker Verticles for heavy tasks)
+✅ Scalable and loosely coupled using Event Bus
+✅ Reliable with appropriate error handling
+✅ Real-time communication using Pub/Sub and Request/Reply patterns
+
+Flow Diagram:
+1️⃣ Client → HTTP Verticle (Receives order request via HTTP API)
+2️⃣ HTTP Verticle → Order Processing Verticle (Request/Reply via Event Bus)
+3️⃣ Order Processing → Payment Verticle (Worker Verticle for heavy processing)
+4️⃣ Payment Success → Inventory & Notification Verticles (Pub/Sub for real-time updates)
+
