@@ -22,8 +22,6 @@ public class MainVerticle extends AbstractVerticle {
     });
     vertx.deployVerticle(new InventoryVerticle());
     vertx.deployVerticle(new NotificationVerticle());
-
     startPromise.complete();
   }
-
 }

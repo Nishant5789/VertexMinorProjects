@@ -1,0 +1,26 @@
+Problem Statement: Smart Traffic Management System 🚦
+Scenario:
+You are building a Smart Traffic Management System for a smart city. The system must:
+
+1️⃣ Monitor real-time traffic congestion from multiple road sensors.
+2️⃣ Predict congestion levels using an AI-based prediction service (CPU-intensive task).
+3️⃣ Control traffic lights dynamically based on real-time congestion data.
+4️⃣ Notify emergency services if unusual congestion is detected (e.g., accident, roadblock).
+5️⃣ Provide live updates to a traffic dashboard for city authorities.
+
+Requirements:
+✅ Use VertxOptions#setWorkerPoolSize() to configure a global worker pool for AI processing & emergency notifications.
+✅ Use DeploymentOptions#setWorkerPoolSize() to define specific worker pool sizes for AI processing & traffic control verticles.
+✅ Implement EventBus Pub-Sub for real-time traffic data updates.
+✅ Use Request-Reply pattern for AI-based congestion prediction.
+✅ Use Future coordination & Promise to wait for AI prediction before updating traffic lights.
+
+🚀 Solution Architecture
+      Component           	 Verticle Type	  Description
+Traffic Sensor Verticle	     Event Loop	      Collects real-time traffic data & publishes it
+AI Prediction Verticle	     Worker	          Analyzes data & predicts congestion levels
+Traffic Control Verticle	   Worker	          Adjusts traffic lights based on AI predictions
+Emergency Service Verticle   Worker	          Notifies emergency services if congestion is unusual
+Dashboard Verticle	         Event Loop     	Updates city dashboard with real-time data
+
+
